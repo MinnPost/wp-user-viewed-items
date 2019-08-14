@@ -223,6 +223,28 @@ class WP_User_Viewed_Items_Admin {
 					'items'    => $this->get_actions(),
 				),
 			),
+			'expire_days'       => array(
+				'title'    => __( 'Cookie expires after', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
+				'page'     => $page,
+				'section'  => $section,
+				'args'     => array(
+					'type'     => 'text',
+					'desc'     => __( 'The cookie will expire after this many days. The default is 30, if left blank.', 'wp-user-viewed-items' ),
+					'constant' => '',
+				),
+			),
+			'cookie_secure'     => array(
+				'title'    => __( 'Secure cookie?', 'wp-analytics-tracking-generator' ),
+				'callback' => $callbacks['text'],
+				'page'     => $page,
+				'section'  => $section,
+				'args'     => array(
+					'type'    => 'checkbox',
+					'desc'    => __( 'Whether this cookie should require https (recommended).', 'arcads-dfp-acm-provider' ),
+					'default' => '',
+				),
+			),
 		);
 
 		if ( class_exists( 'Popup_Maker' ) ) {
@@ -300,6 +322,7 @@ class WP_User_Viewed_Items_Admin {
 				'pending',
 				'draft',
 				'future',
+				'publish',
 			),
 		);
 		$query = new WP_Query( $args );
