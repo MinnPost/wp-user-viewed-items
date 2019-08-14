@@ -38,6 +38,12 @@ class WP_User_Viewed_Items {
 
 	/**
 	* @var object
+	* Front end interface
+	*/
+	public $front_end;
+
+	/**
+	* @var object
 	* Administrative interface
 	*/
 	public $admin;
@@ -59,28 +65,10 @@ class WP_User_Viewed_Items {
 	}
 
 	public function init() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'scripts_and_styles' ) );
+		// front end features
+		$this->front_end = new WP_User_Viewed_Items_Front_End();
 		// Admin features
 		$this->admin = new WP_User_Viewed_Items_Admin();
-	}
-
-	/**
-	* Front end styles. Load the CSS and/or JavaScript
-	*
-	* @return void
-	*/
-	public function scripts_and_styles() {
-		wp_enqueue_script( $this->slug . '-front-end', plugins_url( $this->slug . '/assets/js/' . $this->slug . '-front-end.min.js', dirname( $this->file ) ), array( 'jquery' ), filemtime( plugin_dir_path( $this->file ) . '/assets/js/' . $this->slug . '-front-end.min.js' ), true );
-	}
-
-	/**
-	 * Get the URL to the plugin admin menu
-	 *
-	 * @return string          The menu's URL
-	 */
-	public function get_menu_url() {
-		$url = 'options-general.php?page=' . $this->slug;
-		return admin_url( $url );
 	}
 
 	/**
@@ -89,6 +77,23 @@ class WP_User_Viewed_Items {
 	 */
 	public function load_textdomain() {
 		load_plugin_textdomain( 'wp-user-viewed-items', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+
+	/**
+	 * Sanitize a string of HTML classes
+	 *
+	 */
+	public function sanitize_html_classes( $classes, $sep = ' ' ) {
+		$return = '';
+		if ( ! is_array( $classes ) ) {
+			$classes = explode( $sep, $classes );
+		}
+		if ( ! empty( $classes ) ) {
+			foreach ( $classes as $class ) {
+				$return .= sanitize_html_class( $class ) . ' ';
+			}
+		}
+		return $return;
 	}
 
 }
