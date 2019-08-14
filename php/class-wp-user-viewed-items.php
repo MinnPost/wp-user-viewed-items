@@ -37,6 +37,12 @@ class WP_User_Viewed_Items {
 	public $slug;
 
 	/**
+	* @var object
+	* Administrative interface
+	*/
+	public $admin;
+
+	/**
 	 * Class constructor
 	 *
 	 * @param string $version The current plugin version
@@ -54,6 +60,8 @@ class WP_User_Viewed_Items {
 
 	public function init() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'scripts_and_styles' ) );
+		// Admin features
+		$this->admin = new WP_User_Viewed_Items_Admin();
 	}
 
 	/**
