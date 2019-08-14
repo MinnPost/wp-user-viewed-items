@@ -62,8 +62,7 @@ class WP_User_Viewed_Items {
 	* @return void
 	*/
 	public function scripts_and_styles() {
-		wp_enqueue_script( $this->slug . '-jscookie', plugins_url( $this->slug . '/assets/js/vendor/js.cookie.js', dirname( $this->file ) ), array( 'jquery' ), filemtime( plugin_dir_path( $this->file ) . '/assets/js/vendor/js.cookie.js' ), true );
-		wp_enqueue_script( $this->slug . '-visited', plugins_url( $this->slug . '/assets/js/src/visited.js', dirname( $this->file ) ), array( 'jquery' ), filemtime( plugin_dir_path( $this->file ) . '/assets/js/src/visited.js' ), true );
+		wp_enqueue_script( $this->slug . '-front-end', plugins_url( $this->slug . '/assets/js/' . $this->slug . '-front-end.min.js', dirname( $this->file ) ), array( 'jquery' ), filemtime( plugin_dir_path( $this->file ) . '/assets/js/' . $this->slug . '-front-end.min.js' ), true );
 	}
 
 	/**
